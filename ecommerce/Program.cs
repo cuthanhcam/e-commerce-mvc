@@ -1,5 +1,7 @@
 using ecommerce.Data;
+using ecommerce.Interfaces;
 using ecommerce.Models;
+using ecommerce.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Add repositories, services, and other dependencies, use AddScoped for DI lifetime
+builder.Services.AddScoped<IProductRepository, EFProductRepository>();
+builder.Services.AddScoped<ICategoryRepository, EFCategoryRepository>();
 
 // Thêm Identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
