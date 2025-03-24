@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 namespace ecommerce.Controllers
 {
     [Authorize(Roles = SD.Role_Admin)]
-    public class UserController : Controller
+    public class UserController : BaseController
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;

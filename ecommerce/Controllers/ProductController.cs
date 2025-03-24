@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ecommerce.Controllers
 {
-    public class ProductController : Controller
+    public class ProductController : BaseController
     {
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;

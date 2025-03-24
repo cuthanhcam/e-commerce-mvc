@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ecommerce.Controllers
 {
-    public class CategoryController : Controller
+    public class CategoryController : BaseController
     {
         private readonly ICategoryRepository _categoryRepository;
         private readonly IProductRepository _productRepository;

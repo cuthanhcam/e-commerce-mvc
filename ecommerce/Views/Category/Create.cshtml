@@ -1,5 +1,6 @@
 @model ecommerce.Models.Category
 @{
+    Layout = ViewData["Layout"] as string ?? "~/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Add Category";
 }
 

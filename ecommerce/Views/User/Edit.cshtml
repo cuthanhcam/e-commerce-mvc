@@ -1,6 +1,7 @@
 @model ecommerce.Models.UserRoleViewModel
 @using ecommerce.Models
 @{
+    Layout = ViewData["Layout"] as string ?? "~/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Sửa thông tin người dùng";
 }
 

@@ -148,6 +148,11 @@ namespace ecommerce.Controllers
                 var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
+                    // Kiểm tra vai trò sau khi đăng nhập thành công
+                    if (await _userManager.IsInRoleAsync(user, SD.Role_Admin))
+                    {
+                        return RedirectToAction("Index", "User");
+                    }
                     return RedirectToLocal(returnUrl);
                 }
                 else
@@ -174,6 +179,16 @@ namespace ecommerce.Controllers
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null) return NotFound();
+
+            // Chọn layout dựa trên vai trò
+            if (await _userManager.IsInRoleAsync(user, SD.Role_Admin))
+            {
+                ViewData["Layout"] = "~/Views/Shared/_AdminLayout.cshtml";
+            }
+            else
+            {
+                ViewData["Layout"] = "~/Views/Shared/_Layout.cshtml";
+            }
 
             var model = new ManageViewModel
             {

@@ -16,6 +16,15 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Index()
     {
+        if (User.Identity.IsAuthenticated && User.IsInRole(SD.Role_Admin))
+        {
+            ViewData["Layout"] = "~/Views/Shared/_AdminLayout.cshtml";
+        }
+        else
+        {
+            ViewData["Layout"] = "~/Views/Shared/_Layout.cshtml";
+        }
+
         var products = await _productRepository.GetAllAsync();
         return View(products);
     }
