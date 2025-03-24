@@ -27,8 +27,14 @@ namespace ecommerce.Controllers
         // GET: User/Index
         public async Task<IActionResult> Index()
         {
+            ViewData["Layout"] = "~/Views/Shared/_AdminLayout.cshtml";
             var users = await _userManager.Users.ToListAsync();
             var userRoles = new List<UserRoleViewModel>();
+
+            // Lấy thông tin người dùng hiện tại
+            var currentUser = await _userManager.GetUserAsync(User);
+            var isCurrentUserAdmin = await _userManager.IsInRoleAsync(currentUser, SD.Role_Admin);
+            ViewBag.CurrentUserId = currentUser.Id;
 
             foreach (var user in users)
             {
@@ -39,7 +45,10 @@ namespace ecommerce.Controllers
                     UserName = user.UserName,
                     FullName = user.FullName,
                     Email = user.Email,
-                    Roles = roles.ToList()
+                    Address = user.Address,
+                    Age = user.Age,
+                    Roles = roles.ToList(),
+                    IsCurrentUserAdmin = isCurrentUserAdmin
                 });
             }
 
@@ -233,21 +242,42 @@ namespace ecommerce.Controllers
         }
 
         // POST: User/Delete/{id}
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
+            if (string.IsNullOrEmpty(id))
+            {
+                return NotFound();
+            }
+
             var user = await _userManager.FindByIdAsync(id);
-            if (user == null) return NotFound();
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            // Kiểm tra xem người dùng cần xóa có phải là admin không
+            var isTargetUserAdmin = await _userManager.IsInRoleAsync(user, SD.Role_Admin);
+            if (isTargetUserAdmin)
+            {
+                // Lấy thông tin người dùng hiện tại
+                var currentUser = await _userManager.GetUserAsync(User);
+                if (currentUser.Id != user.Id) // Nếu không phải chính mình
+                {
+                    TempData["Error"] = "Không thể xóa tài khoản Admin khác.";
+                    return RedirectToAction(nameof(Index));
+                }
+            }
 
             var result = await _userManager.DeleteAsync(user);
             if (result.Succeeded)
             {
-                TempData["SuccessMessage"] = "Xóa người dùng thành công!";
+                TempData["Success"] = "Xóa người dùng thành công.";
             }
             else
             {
-                TempData["ErrorMessage"] = "Có lỗi xảy ra khi xóa người dùng.";
+                TempData["Error"] = "Có lỗi xảy ra khi xóa người dùng.";
             }
 
             return RedirectToAction(nameof(Index));

@@ -1,0 +1,137 @@
+@using ecommerce.Models
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin Dashboard</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <style>
+        .admin-sidebar {
+            min-height: 100vh;
+            background-color: #343a40;
+            padding-top: 1rem;
+        }
+
+        .admin-sidebar .nav-link {
+            color: #fff;
+            padding: 0.5rem 1rem;
+            margin: 0.2rem 0;
+            border-radius: 0.25rem;
+            transition: all 0.3s;
+        }
+
+        .admin-sidebar .nav-link:hover,
+        .admin-sidebar .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .admin-sidebar .nav-link i {
+            margin-right: 0.5rem;
+        }
+
+        .admin-content {
+            min-height: 100vh;
+            padding: 1rem;
+            background-color: #f8f9fa;
+        }
+
+        .admin-header {
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,.1);
+            padding: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .admin-brand {
+            color: #fff;
+            font-size: 1.5rem;
+            text-decoration: none;
+            padding: 1rem;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        .admin-brand:hover {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .admin-user {
+            padding: 1rem;
+            border-top: 1px solid rgba(255,255,255,.1);
+            margin-top: auto;
+        }
+
+        .admin-user .nav-link {
+            padding: 0.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 px-0 admin-sidebar position-fixed">
+                <a class="admin-brand" asp-controller="Home" asp-action="Index">
+                    <i class="bi bi-shop"></i> E-Commerce
+                </a>
+                <div class="nav flex-column">
+                    <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Home" ? "active" : "")"
+                        asp-controller="Home" asp-action="Index">
+                        <i class="bi bi-house"></i> Trang chủ
+                    </a>
+                    <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "User" ? "active" : "")"
+                        asp-controller="User" asp-action="Index">
+                        <i class="bi bi-people"></i> Quản lý người dùng
+                    </a>
+                    <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Category" ? "active" : "")"
+                        asp-controller="Category" asp-action="Index">
+                        <i class="bi bi-list"></i> Quản lý danh mục
+                    </a>
+                    <a class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString() == "Product" ? "active" : "")"
+                        asp-controller="Product" asp-action="Index">
+                        <i class="bi bi-box"></i> Quản lý sản phẩm
+                    </a>
+                </div>
+                <div class="admin-user mt-auto">
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+
+            <!-- Main content -->
+            <div class="col-md-9 col-lg-10 ms-sm-auto px-4 admin-content">
+                <div class="admin-header d-flex justify-content-between align-items-center">
+                    <h1 class="h3">@ViewData["Title"]</h1>
+                    <div>
+                        @if (TempData["SuccessMessage"] != null)
+                        {
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                @TempData["SuccessMessage"]
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        }
+                        @if (TempData["ErrorMessage"] != null)
+                        {
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                @TempData["ErrorMessage"]
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <main role="main">
+                    @RenderBody()
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
