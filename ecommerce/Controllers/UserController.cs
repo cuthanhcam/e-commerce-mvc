@@ -111,6 +111,14 @@ namespace ecommerce.Controllers
             var userRoles = await _userManager.GetRolesAsync(user);
             var allRoles = await _roleManager.Roles.ToListAsync();
 
+            // Kiểm tra xem user đang sửa có phải là admin không
+            var isTargetUserAdmin = userRoles.Contains(SD.Role_Admin);
+
+            // Kiểm tra xem user hiện tại có phải là admin không
+            var currentUser = await _userManager.GetUserAsync(User);
+            var currentUserRoles = await _userManager.GetRolesAsync(currentUser);
+            var isCurrentUserAdmin = currentUserRoles.Contains(SD.Role_Admin);
+
             var model = new UserRoleViewModel
             {
                 UserId = user.Id,
@@ -120,7 +128,9 @@ namespace ecommerce.Controllers
                 Address = user.Address,
                 Age = user.Age,
                 Roles = userRoles.ToList(),
-                AvailableRoles = allRoles.Select(r => r.Name).ToList()
+                AvailableRoles = allRoles.Select(r => r.Name).ToList(),
+                IsTargetUserAdmin = isTargetUserAdmin,
+                IsCurrentUserAdmin = isCurrentUserAdmin
             };
 
             return View(model);
@@ -146,6 +156,24 @@ namespace ecommerce.Controllers
                     return View(model);
                 }
 
+                // Kiểm tra xem user hiện tại có phải là admin không
+                var currentUser = await _userManager.GetUserAsync(User);
+                var currentUserRoles = await _userManager.GetRolesAsync(currentUser);
+                var isCurrentUserAdmin = currentUserRoles.Contains(SD.Role_Admin);
+
+                // Kiểm tra xem user đang sửa có phải là admin không
+                var targetUserRoles = await _userManager.GetRolesAsync(user);
+                var isTargetUserAdmin = targetUserRoles.Contains(SD.Role_Admin);
+
+                // Nếu user đang sửa là admin và user hiện tại không phải admin, không cho phép sửa
+                if (isTargetUserAdmin && !isCurrentUserAdmin)
+                {
+                    ModelState.AddModelError("", "Bạn không có quyền sửa thông tin admin.");
+                    var availableRoles = await _roleManager.Roles.ToListAsync();
+                    model.AvailableRoles = availableRoles.Select(r => r.Name).ToList();
+                    return View(model);
+                }
+
                 // Cập nhật thông tin người dùng
                 user.FullName = model.FullName;
                 user.Email = model.Email;
@@ -163,10 +191,15 @@ namespace ecommerce.Controllers
                     return View(model);
                 }
 
-                // Cập nhật vai trò
+                // Cập nhật vai trò - chỉ cho phép 1 role
                 var currentRoles = await _userManager.GetRolesAsync(user);
                 await _userManager.RemoveFromRolesAsync(user, currentRoles);
-                await _userManager.AddToRolesAsync(user, model.Roles);
+                
+                // Chỉ thêm role đầu tiên được chọn
+                if (model.Roles.Any())
+                {
+                    await _userManager.AddToRoleAsync(user, model.Roles.First());
+                }
 
                 TempData["SuccessMessage"] = "Cập nhật thông tin và quyền thành công!";
                 return RedirectToAction(nameof(Index));
