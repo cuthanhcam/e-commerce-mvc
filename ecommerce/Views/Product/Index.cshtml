@@ -6,7 +6,7 @@
 
 <div class="container mt-5">
     <h2 class="mb-4 text-center">Product List</h2>
-    @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Company) || User.IsInRole(SD.Role_Employee))
+    @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
     {
         <a asp-action="Create" class="btn btn-success mb-3"><i class="bi bi-plus-circle"></i> Create New</a>
     }
@@ -50,7 +50,7 @@
                         <td>@product.Description</td>
                         <td>@(product.Category?.Name ?? "N/A")</td>
                         <td>
-                            @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Company) || User.IsInRole(SD.Role_Employee))
+                            @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
                             {
                                 <a asp-action="Edit" asp-route-id="@product.Id" class="btn btn-warning btn-sm"><i class="bi bi-pencil"></i> Edit</a>
                                 <a asp-action="Delete" asp-route-id="@product.Id" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Delete</a>

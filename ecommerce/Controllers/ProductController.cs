@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ecommerce.Interfaces;
 using ecommerce.Models;
+using ecommerce.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -41,7 +41,7 @@ namespace ecommerce.Controllers
         }
 
         // GET: Product/Create
-        [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Company + "," + SD.Role_Employee)]
+        [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
         public async Task<IActionResult> Create()
         {
             var categories = await _categoryRepository.GetAllAsync();
@@ -52,7 +52,7 @@ namespace ecommerce.Controllers
         // POST: Product/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Company + "," + SD.Role_Employee)]
+        [Authorize(Roles = SD.Role_Admin + "," + "," + SD.Role_Employee)]
         public async Task<IActionResult> Create([Bind("Name,Description,Price,CategoryId")] Product product, List<IFormFile> images)
         {
             if (ModelState.IsValid)
@@ -99,7 +99,7 @@ namespace ecommerce.Controllers
         }
 
         // GET: Product/Edit/{id}
-        [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Company + "," + SD.Role_Employee)]
+        [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null) return NotFound();
@@ -113,7 +113,7 @@ namespace ecommerce.Controllers
         // POST: Product/Edit/{id}
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Company + "," + SD.Role_Employee)]
+        [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Price,CategoryId")] Product product, List<IFormFile> images, List<int> deleteImages)
         {
             if (id != product.Id) return NotFound();
@@ -182,7 +182,7 @@ namespace ecommerce.Controllers
         }
 
         // GET: Product/Delete/{id}
-        [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Company + "," + SD.Role_Employee)]
+        [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return NotFound();
@@ -194,7 +194,7 @@ namespace ecommerce.Controllers
         // POST: Product/Delete/{id}
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Company + "," + SD.Role_Employee)]
+        [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             await _productRepository.DeleteAsync(id);

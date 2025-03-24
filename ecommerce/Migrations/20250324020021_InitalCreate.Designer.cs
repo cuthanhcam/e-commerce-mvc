@@ -12,8 +12,8 @@ using ecommerce.Data;
 namespace ecommerce.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250323145707_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250324020021_InitalCreate")]
+    partial class InitalCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -225,10 +225,6 @@ namespace ecommerce.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
-                        .IsUnique()
-                        .HasFilter("[Email] IS NOT NULL");
-
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -281,7 +277,6 @@ namespace ecommerce.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<decimal>("Price")
-                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ecommerce.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitalCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -179,7 +179,7 @@ namespace ecommerce.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CategoryId = table.Column<int>(type: "int", nullable: false)
@@ -246,13 +246,6 @@ namespace ecommerce.Migrations
                 name: "EmailIndex",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_Email",
-                table: "AspNetUsers",
-                column: "Email",
-                unique: true,
-                filter: "[Email] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",

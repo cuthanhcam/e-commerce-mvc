@@ -12,7 +12,6 @@ namespace ecommerce.Controllers
     public abstract class BaseController : Controller
     {
         protected bool IsAdming => User.IsInRole(SD.Role_Admin);
-        protected bool IsCompany => User.IsInRole(SD.Role_Company);
         protected bool IsEmployee => User.IsInRole(SD.Role_Employee);
         protected bool IsCustomer => User.IsInRole(SD.Role_Customer);
 

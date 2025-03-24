@@ -1,5 +1,4 @@
 using ecommerce.Data;
-using ecommerce.Interfaces;
 using ecommerce.Models;
 using ecommerce.Repositories;
 using Microsoft.AspNetCore.Identity;

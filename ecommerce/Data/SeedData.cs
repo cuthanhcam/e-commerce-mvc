@@ -12,10 +12,10 @@ namespace ecommerce.Data
         public static async Task Initialize(IServiceProvider serviceProvider)
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-            // Seed roles
-            string[] roles = { SD.Role_Admin, SD.Role_Company, SD.Role_Employee, SD.Role_Customer };
+            // Seed Roles
+            string[] roles = { SD.Role_Admin, SD.Role_Employee, SD.Role_Customer };
             foreach (var role in roles)
             {
                 if (!await roleManager.RoleExistsAsync(role))
@@ -24,7 +24,7 @@ namespace ecommerce.Data
                 }
             }
 
-            // Seed admin user
+            // Seed Admin User
             var adminEmail = "admin@example.com";
             var adminUser = await userManager.FindByEmailAsync(adminEmail);
             if (adminUser == null)
@@ -34,9 +34,9 @@ namespace ecommerce.Data
                     UserName = adminEmail, // UserName = Email
                     Email = adminEmail,
                     FullName = "Admin User",
-                    Address = "123 Admin Street, Admin City",
-                    Age = 20,
-                    EmailConfirmed = true // Set EmailConfirmed to true for admin user
+                    Address = "123 Admin Street, Admin City", // Thêm Address vì là bắt buộc trong model
+                    Age = 30, // Age có thể null, nhưng gán giá trị mẫu
+                    EmailConfirmed = true // Để không cần xác nhận email
                 };
 
                 var result = await userManager.CreateAsync(adminUser, "Admin123!");
@@ -46,6 +46,7 @@ namespace ecommerce.Data
                 }
                 else
                 {
+                    // Log lỗi nếu cần
                     foreach (var error in result.Errors)
                     {
                         Console.WriteLine($"Error creating admin user: {error.Description}");
@@ -53,29 +54,7 @@ namespace ecommerce.Data
                 }
             }
 
-            // Seed company user
-            var companyEmail = "company@example.com";
-            var companyUser = await userManager.FindByEmailAsync(companyEmail);
-            if (companyUser == null)
-            {
-                companyUser = new ApplicationUser
-                {
-                    UserName = companyEmail,
-                    Email = companyEmail,
-                    FullName = "Company User",
-                    Address = "456 Company Road, Business City",
-                    Age = 25,
-                    EmailConfirmed = true
-                };
-
-                var result = await userManager.CreateAsync(companyUser, "Company123!");
-                if (result.Succeeded)
-                {
-                    await userManager.AddToRoleAsync(companyUser, SD.Role_Company);
-                }
-            }
-
-            // Seed employee user
+            // Seed Employee User (Tùy chọn)
             var employeeEmail = "employee@example.com";
             var employeeUser = await userManager.FindByEmailAsync(employeeEmail);
             if (employeeUser == null)
@@ -86,7 +65,7 @@ namespace ecommerce.Data
                     Email = employeeEmail,
                     FullName = "Employee User",
                     Address = "789 Employee Lane, Work Town",
-                    Age = 20,
+                    Age = 25,
                     EmailConfirmed = true
                 };
 
@@ -97,7 +76,7 @@ namespace ecommerce.Data
                 }
             }
 
-            // Seed customer user
+            // Seed Customer User (Tùy chọn)
             var customerEmail = "customer@example.com";
             var customerUser = await userManager.FindByEmailAsync(customerEmail);
             if (customerUser == null)
@@ -108,7 +87,7 @@ namespace ecommerce.Data
                     Email = customerEmail,
                     FullName = "Customer User",
                     Address = "101 Customer Avenue, Shop City",
-                    Age = null, // Age can be null for customer
+                    Age = null, // Age có thể null
                     EmailConfirmed = true
                 };
 

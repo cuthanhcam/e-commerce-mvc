@@ -222,10 +222,6 @@ namespace ecommerce.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
-                        .IsUnique()
-                        .HasFilter("[Email] IS NOT NULL");
-
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -278,7 +274,6 @@ namespace ecommerce.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<decimal>("Price")
-                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");

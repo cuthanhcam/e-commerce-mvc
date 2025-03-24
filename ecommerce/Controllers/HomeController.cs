@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using ecommerce.Models;
-using ecommerce.Interfaces;
+using ecommerce.Repositories;
 
 namespace ecommerce.Controllers;
 

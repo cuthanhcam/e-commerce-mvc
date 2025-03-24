@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ecommerce.Data;
-using ecommerce.Interfaces;
 using ecommerce.Models;
 using Microsoft.EntityFrameworkCore;
 
