@@ -1,0 +1,56 @@
+@model ecommerce.Models.RegisterViewModel
+@{
+    ViewData["Title"] = "Đăng ký";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h2 class="text-center mb-4">Đăng ký tài khoản</h2>
+                    <form asp-controller="Account" asp-action="Register" method="post">
+                        <div class="form-group mb-3">
+                            <label asp-for="FullName" class="form-label">Họ và tên</label>
+                            <input asp-for="FullName" class="form-control" required>
+                            <span asp-validation-for="FullName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="Email" class="form-label">Email</label>
+                            <input asp-for="Email" class="form-control" required>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="Password" class="form-label">Mật khẩu</label>
+                            <input asp-for="Password" class="form-control" required>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="ConfirmPassword" class="form-label">Xác nhận mật khẩu</label>
+                            <input asp-for="ConfirmPassword" class="form-control" required>
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="Address" class="form-label">Địa chỉ</label>
+                            <input asp-for="Address" class="form-control">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="Age" class="form-label">Tuổi</label>
+                            <input asp-for="Age" class="form-control" type="number">
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Đăng ký</button>
+                        </div>
+                    </form>
+                    <div class="text-center mt-3">
+                        <p>Đã có tài khoản? <a asp-controller="Account" asp-action="Login">Đăng nhập</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+} 

@@ -1,0 +1,46 @@
+@model ecommerce.Models.ManageViewModel
+@{
+    ViewData["Title"] = "Quản lý tài khoản";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Quản lý tài khoản</h2>
+    <form asp-action="Manage" method="post" class="card p-4 shadow-sm">
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                @TempData["SuccessMessage"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+        <div class="form-group mb-3">
+            <label asp-for="FullName" class="form-label fw-bold">Họ và tên</label>
+            <input asp-for="FullName" class="form-control" required />
+            <span asp-validation-for="FullName" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="Email" class="form-label fw-bold">Email</label>
+            <input asp-for="Email" class="form-control" readonly />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="Address" class="form-label fw-bold">Địa chỉ</label>
+            <input asp-for="Address" class="form-control" />
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="Age" class="form-label fw-bold">Tuổi</label>
+            <input asp-for="Age" class="form-control" type="number" />
+            <span asp-validation-for="Age" class="text-danger"></span>
+        </div>
+        <div class="d-flex justify-content-end gap-2">
+            <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Cập nhật</button>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-secondary"><i class="bi bi-x-circle"></i> Hủy</a>
+        </div>
+        <div asp-validation-summary="All" class="text-danger mt-3"></div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

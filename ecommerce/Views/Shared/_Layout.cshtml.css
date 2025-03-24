@@ -1,6 +1,4 @@
-﻿/* Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
-
+﻿/* Tùy chỉnh tổng thể */
 a.navbar-brand {
   white-space: normal;
   text-align: center;
@@ -8,24 +6,34 @@ a.navbar-brand {
 }
 
 a {
-  color: #0077cc;
+  color: #00ced1; /* Cyan đậm cho các link */
+}
+
+a:hover {
+  color: #00b7eb; /* Cyan sáng hơn khi hover */
 }
 
 .btn-primary {
   color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+  background-color: #00ced1; /* Cyan đậm */
+  border-color: #009b9b;
+}
+
+.btn-primary:hover {
+  background-color: #00b7eb;
+  border-color: #008b8b;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
   color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+  background-color: #00ced1;
+  border-color: #009b9b;
 }
 
 .border-top {
   border-top: 1px solid #e5e5e5;
 }
+
 .border-bottom {
   border-bottom: 1px solid #e5e5e5;
 }
@@ -37,12 +45,4 @@ a {
 button.accept-policy {
   font-size: 1rem;
   line-height: inherit;
-}
-
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px;
 }

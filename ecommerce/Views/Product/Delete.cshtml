@@ -1,0 +1,41 @@
+@model ecommerce.Models.Product
+@{
+    ViewData["Title"] = "Delete Product";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Delete Product</h2>
+    <div class="card p-4 shadow-sm">
+        <h3 class="text-danger text-center">Are you sure you want to delete this?</h3>
+        <div class="text-center">
+            <h4 class="fw-bold">@Model.Name</h4>
+            <p>Price: $@Model.Price.ToString("F2")</p>
+            <p>Category: @(Model.Category?.Name ?? "N/A")</p>
+            @if (!string.IsNullOrEmpty(Model.ImageUrl) || (Model.Images != null && Model.Images.Any()))
+            {
+                <div class="d-flex flex-wrap gap-2 justify-content-center mb-3">
+                    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                    {
+                        <img src="@Model.ImageUrl" alt="@Model.Name" class="img-fluid rounded" style="max-width: 200px;" />
+                    }
+                    @if (Model.Images != null && Model.Images.Any())
+                    {
+                        @foreach (var image in Model.Images)
+                        {
+                            <img src="@image.Url" alt="@Model.Name" class="img-fluid rounded" style="max-width: 200px;" />
+                        }
+                    }
+                </div>
+            }
+            else
+            {
+                <p class="text-muted">No images available.</p>
+            }
+        </div>
+        <form asp-action="Delete" method="post" class="d-flex justify-content-center gap-2 mt-3">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i> Delete</button>
+            <a asp-action="Index" class="btn btn-secondary"><i class="bi bi-x-circle"></i> Cancel</a>
+        </form>
+    </div>
+</div>

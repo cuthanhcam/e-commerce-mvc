@@ -1,0 +1,45 @@
+@model ecommerce.Models.Product
+@{
+    ViewData["Title"] = "Thêm sản phẩm";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Thêm sản phẩm mới</h2>
+    <form asp-action="Create" method="post" enctype="multipart/form-data" class="card p-4 shadow-sm">
+        <div class="form-group mb-3">
+            <label asp-for="Name" class="form-label fw-bold">Tên sản phẩm</label>
+            <input asp-for="Name" class="form-control" required />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="Price" class="form-label fw-bold">Giá</label>
+            <input asp-for="Price" class="form-control" required />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="Description" class="form-label fw-bold">Mô tả</label>
+            <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="CategoryId" class="form-label fw-bold">Danh mục</label>
+            <select asp-for="CategoryId" class="form-select" asp-items="@((SelectList)ViewData["CategoryId"])" required>
+                <option value="">-- Chọn danh mục --</option>
+            </select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label class="form-label fw-bold">Hình ảnh sản phẩm</label>
+            <input type="file" name="images" multiple class="form-control" accept="image/*" />
+            <small class="text-muted">Bạn có thể chọn nhiều ảnh cùng lúc</small>
+        </div>
+        <div class="d-flex justify-content-end gap-2">
+            <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Thêm</button>
+            <a asp-action="Index" class="btn btn-secondary"><i class="bi bi-x-circle"></i> Hủy</a>
+        </div>
+        <div asp-validation-summary="All" class="text-danger mt-3"></div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+} 

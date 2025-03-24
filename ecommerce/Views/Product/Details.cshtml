@@ -1,0 +1,66 @@
+@model ecommerce.Models.Product
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">@Model.Name</h2>
+    <div class="card p-4 shadow-sm">
+        <div class="row">
+            <div class="col-md-6 text-center">
+                @if (!string.IsNullOrEmpty(Model.ImageUrl) || (Model.Images != null && Model.Images.Any()))
+                {
+                    <div id="productImageCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                            {
+                                <!-- Hiển thị ImageUrl trước -->
+                                <div class="carousel-item active">
+                                    <img src="@Model.ImageUrl" class="d-block w-100" alt="@Model.Name" style="max-height: 400px; object-fit: contain;" />
+                                </div>
+                            }
+                            @if (Model.Images != null && Model.Images.Any())
+                            {
+                                <!-- Hiển thị các ảnh từ Images -->
+                                @foreach (var image in Model.Images)
+                                {
+                                    <div class="carousel-item @(string.IsNullOrEmpty(Model.ImageUrl) && image == Model.Images.First() ? "active" : "")">
+                                        <img src="@image.Url" class="d-block w-100" alt="@Model.Name" style="max-height: 400px; object-fit: contain;" />
+                                    </div>
+                                }
+                            }
+                        </div>
+                        @if ((!string.IsNullOrEmpty(Model.ImageUrl) && Model.Images != null && Model.Images.Any()) || (Model.Images != null && Model.Images.Count > 1))
+                        {
+                            <!-- Hiển thị nút điều hướng nếu có nhiều hơn 1 ảnh -->
+                            <button class="carousel-control-prev" type="button" data-bs-target="#productImageCarousel" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#productImageCarousel" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <p class="text-muted">No image available</p>
+                }
+            </div>
+            <div class="col-md-6">
+                <h3>Price: $@Model.Price.ToString("F2")</h3>
+                <p><strong>Description:</strong> @(Model.Description ?? "No description")</p>
+                <p><strong>Category:</strong> @(Model.Category?.Name ?? "N/A")</p>
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <a asp-action="Index" class="btn btn-primary"><i class="bi bi-arrow-left"></i> Back to List</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- Nếu cần thêm script cho carousel (thường đã có trong Bootstrap) -->
+}

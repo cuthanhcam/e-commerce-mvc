@@ -1,8 +1,41 @@
-﻿@{
+﻿@model List<ecommerce.Models.Product>
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Our Products</h2>
+    <div class="row">
+        @foreach (var product in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm h-100">
+                    @if (product.Images != null && product.Images.Any())
+                    {
+                        <img src="@product.Images.First().Url" class="card-img-top" alt="@product.Name" style="height: 200px; object-fit: cover;" />
+                    }
+                    else if (!string.IsNullOrEmpty(product.ImageUrl))
+                    {
+                        <img src="@product.ImageUrl" class="card-img-top" alt="@product.Name" style="height: 200px; object-fit: cover;" />
+                    }
+                    else
+                    {
+                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <span class="text-muted">No image</span>
+                        </div>
+                    }
+                    <div class="card-body">
+                        <h5 class="card-title">@product.Name</h5>
+                        <p class="card-text"><strong>Price:</strong> $@product.Price.ToString("F2")</p>
+                        <p class="card-text text-truncate" title="@product.Description">@product.Description</p>
+                    </div>
+                    <div class="card-footer text-center bg-white border-0">
+                        <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="btn btn-primary btn-sm">
+                            <i class="bi bi-eye"></i> View Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 </div>

@@ -1,0 +1,21 @@
+@model ecommerce.Models.UserRoleViewModel
+@{
+    ViewData["Title"] = "Xóa người dùng";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Xóa người dùng</h2>
+    <div class="card p-4 shadow-sm">
+        <h3 class="text-danger text-center">Bạn có chắc chắn muốn xóa người dùng này?</h3>
+        <div class="text-center">
+            <h4 class="fw-bold">@Model.FullName</h4>
+            <p>Email: @Model.Email</p>
+            <p>Vai trò: @string.Join(", ", Model.Roles)</p>
+        </div>
+        <form asp-action="Delete" method="post" class="d-flex justify-content-center gap-2 mt-3">
+            <input type="hidden" asp-for="UserId" />
+            <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i> Xóa</button>
+            <a asp-action="Index" class="btn btn-secondary"><i class="bi bi-x-circle"></i> Hủy</a>
+        </form>
+    </div>
+</div>

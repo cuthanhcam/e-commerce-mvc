@@ -1,0 +1,22 @@
+@{
+    ViewData["Title"] = "Truy cập bị từ chối";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <div class="card shadow">
+                <div class="card-body">
+                    <i class="fas fa-lock text-danger" style="font-size: 5rem;"></i>
+                    <h1 class="mt-4 text-danger">Truy cập bị từ chối</h1>
+                    <p class="lead text-muted">Bạn không có quyền truy cập vào trang này.</p>
+                    <div class="mt-4">
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-primary">
+                            <i class="fas fa-home"></i> Về trang chủ
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

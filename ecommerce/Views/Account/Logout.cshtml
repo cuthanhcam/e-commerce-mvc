@@ -1,0 +1,20 @@
+@{
+    ViewData["Title"] = "Đăng xuất";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-body text-center">
+                    <h2 class="mb-4">Đăng xuất</h2>
+                    <p class="lead">Bạn có chắc chắn muốn đăng xuất?</p>
+                    <form asp-controller="Account" asp-action="Logout" method="post">
+                        <button type="submit" class="btn btn-danger">Đăng xuất</button>
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Hủy</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

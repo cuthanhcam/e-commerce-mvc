@@ -1,0 +1,49 @@
+@model ecommerce.Models.RegisterViewModel
+@{
+    ViewData["Title"] = "Thêm người dùng";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Thêm người dùng mới</h2>
+    <form asp-action="Create" method="post" class="card p-4 shadow-sm">
+        <div class="form-group mb-3">
+            <label asp-for="FullName" class="form-label fw-bold">Họ và tên</label>
+            <input asp-for="FullName" class="form-control" required />
+            <span asp-validation-for="FullName" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="Email" class="form-label fw-bold">Email</label>
+            <input asp-for="Email" class="form-control" required />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="Password" class="form-label fw-bold">Mật khẩu</label>
+            <input asp-for="Password" class="form-control" required />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="ConfirmPassword" class="form-label fw-bold">Xác nhận mật khẩu</label>
+            <input asp-for="ConfirmPassword" class="form-control" required />
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="Address" class="form-label fw-bold">Địa chỉ</label>
+            <input asp-for="Address" class="form-control" />
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="Age" class="form-label fw-bold">Tuổi</label>
+            <input asp-for="Age" class="form-control" type="number" />
+            <span asp-validation-for="Age" class="text-danger"></span>
+        </div>
+        <div class="d-flex justify-content-end gap-2">
+            <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Thêm</button>
+            <a asp-action="Index" class="btn btn-secondary"><i class="bi bi-x-circle"></i> Hủy</a>
+        </div>
+        <div asp-validation-summary="All" class="text-danger mt-3"></div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
