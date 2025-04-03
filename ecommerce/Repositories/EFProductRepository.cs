@@ -141,5 +141,47 @@ namespace ecommerce.Repositories
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<List<Product>> GetFilteredProductsAsync(string searchString, int? categoryId, string sortOrder)
+        {
+            if (_context.Products == null)
+            {
+                throw new InvalidOperationException("Products table is not available.");
+            }
+
+            var query = _context.Products
+                .Include(p => p.Category)
+                .Include(p => p.Images)
+                .AsQueryable();
+
+            // Tìm kiếm theo tên sản phẩm, không phân biệt chữ hoa/thường
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                // Sử dụng ToLower() để không phân biệt chữ hoa/thường
+                query = query.Where(p => p.Name.ToLower().Contains(searchString.ToLower()));
+            }
+
+            // Lọc theo danh mục
+            if (categoryId.HasValue)
+            {
+                query = query.Where(p => p.CategoryId == categoryId.Value);
+            }
+
+            // Sắp xếp
+            switch (sortOrder)
+            {
+                case "price_desc":
+                    query = query.OrderByDescending(p => p.Price);
+                    break;
+                case "price_asc":
+                    query = query.OrderBy(p => p.Price);
+                    break;
+                default:
+                    query = query.OrderBy(p => p.Name); // Mặc định sắp xếp theo tên
+                    break;
+            }
+
+            return await query.AsNoTracking().ToListAsync();
+        }
     }
 }

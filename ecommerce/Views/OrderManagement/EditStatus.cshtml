@@ -1,0 +1,36 @@
+@model ecommerce.Models.Order
+@{
+    Layout = ViewData["Layout"] as string ?? "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Chỉnh sửa trạng thái đơn hàng";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Chỉnh sửa trạng thái đơn hàng #@Model.Id</h2>
+
+    <div class="card shadow p-4">
+        <form asp-action="EditStatus" method="post">
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group mb-3">
+                <label class="form-label fw-bold">Trạng thái</label>
+                <select asp-for="Status" class="form-select">
+                    <option value="Chờ xử lý">Chờ xử lý</option>
+                    <option value="Đang giao">Đang giao</option>
+                    <option value="Hoàn thành">Hoàn thành</option>
+                    <option value="Hủy">Hủy</option>
+                </select>
+            </div>
+            <div class="d-flex justify-content-end gap-2">
+                <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Hủy
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-save"></i> Lưu
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

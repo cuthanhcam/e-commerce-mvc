@@ -13,5 +13,6 @@ namespace ecommerce.Repositories
         Task AddAsync(Product product);
         Task UpdateAsync(Product product);
         Task DeleteAsync(int id);
+        Task<List<Product>> GetFilteredProductsAsync(string searchString, int? categoryId, string sortOrder);
     }
 }

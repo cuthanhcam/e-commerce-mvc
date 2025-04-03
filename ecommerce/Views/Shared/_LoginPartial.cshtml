@@ -10,13 +10,19 @@
     {
         <li class="nav-item">
             <a class="nav-link text-dark" asp-controller="Account" asp-action="Manage" title="Quản lý tài khoản">
-                <i class="fas fa-user"></i> @User.Identity?.Name
+                <i class="bi bi-person"></i> @User.Identity?.Name
             </a>
         </li>
         <li class="nav-item">
-            <form class="form-inline" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" >
+            <a class="nav-link text-dark" asp-controller="ShoppingCart" asp-action="Index" title="Giỏ hàng">
+                <i class="bi bi-cart"></i> Giỏ hàng
+            </a>
+        </li>
+        <li class="nav-item">
+            <form class="form-inline" asp-controller="Account" asp-action="Logout"
+                  asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post">
                 <button type="submit" class="nav-link btn btn-link text-dark">
-                    <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                    <i class="bi bi-box-arrow-right"></i> Đăng xuất
                 </button>
             </form>
         </li>
@@ -25,12 +31,12 @@
     {
         <li class="nav-item">
             <a class="nav-link text-dark" asp-controller="Account" asp-action="Register">
-                <i class="fas fa-user-plus"></i> Đăng ký
+                <i class="bi bi-person-plus"></i> Đăng ký
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">
-                <i class="fas fa-sign-in-alt"></i> Đăng nhập
+                <i class="bi bi-box-arrow-in-right"></i> Đăng nhập
             </a>
         </li>
     }

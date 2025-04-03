@@ -22,14 +22,20 @@ namespace ecommerce.Controllers
             _categoryRepository = categoryRepository;
         }
 
-        // GET: Product/Index
         [AllowAnonymous]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString, int? categoryId, string sortOrder)
         {
-            var products = await _productRepository.GetAllAsync();
+            var products = await _productRepository.GetFilteredProductsAsync(searchString, categoryId, sortOrder);
+
+            var categories = await _categoryRepository.GetAllAsync();
+            ViewData["Categories"] = new SelectList(categories, "Id", "Name");
+            ViewData["CurrentSearch"] = searchString;
+            ViewData["CurrentCategory"] = categoryId;
+            ViewData["CurrentSort"] = sortOrder;
+
             return View(products);
         }
-
+        
         // GET: Product/Details/{id}
         [Authorize]
         public async Task<IActionResult> Details(int? id)

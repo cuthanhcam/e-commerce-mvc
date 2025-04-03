@@ -16,7 +16,7 @@
         }
 
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
             display: flex;
             min-height: 100vh;
             background-color: #f8f9fa;
@@ -32,7 +32,7 @@
             top: 0;
             left: 0;
             padding-top: 20px;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
         }
 
         .sidebar .nav-link {
@@ -69,7 +69,7 @@
         .navbar-top {
             background-color: #ffffff;
             padding: 10px 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
         }
 
@@ -78,9 +78,23 @@
             font-weight: 500;
         }
 
+        .navbar-top .nav-link {
+            color: #343a40 !important;
+            font-weight: 500;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .navbar-top .nav-link:hover {
+            color: #495057 !important;
+        }
+
+        .navbar-top .nav-link i {
+            margin-right: 5px;
+        }
+
         /* Main content */
         main {
-            flex: 1 0 auto; /* Nội dung chính mở rộng để đẩy footer xuống */
+            flex: 1 0 auto;
         }
 
         /* Footer */
@@ -89,7 +103,7 @@
             color: white;
             padding: 20px;
             text-align: center;
-            flex-shrink: 0; /* Không co lại */
+            flex-shrink: 0;
         }
 
         .footer a {
@@ -125,13 +139,13 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" asp-controller="User" asp-action="Index">
-                    <i class="bi bi-people"></i> Người dùng
+                <a class="nav-link" asp-controller="OrderManagement" asp-action="Index">
+                    <i class="bi bi-cart-check"></i> Đơn hàng
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" asp-controller="Account" asp-action="Manage">
-                    <i class="bi bi-person"></i> Tài khoản
+                <a class="nav-link" asp-controller="User" asp-action="Index">
+                    <i class="bi bi-people"></i> Người dùng
                 </a>
             </li>
         </ul>
@@ -140,10 +154,20 @@
     <!-- Nội dung chính -->
     <div class="content">
         <!-- Header -->
-        <nav class="navbar navbar-top">
+        <nav class="navbar navbar-top navbar-expand-lg shadow-sm">
             <div class="container-fluid">
                 <span class="navbar-brand">@ViewData["Title"]</span>
-                <partial name="_LoginPartial" />
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <partial name="_LoginPartial" />
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
 
@@ -167,8 +191,11 @@
         </main>
 
         <!-- Footer -->
-        <footer class="footer">
-            <p>© 2025 - <a href="https://github.com/cuthanhcam" target="_blank">github.com/cuthanhcam</a></p>
+        <footer class="footer text-center">
+            <div class="container">
+                <p>© 2025 - <a href="https://github.com/cuthanhcam" target="_blank">github.com/cuthanhcam</a></p>
+                <p class="small">From cuthanhcam with <i class="bi bi-heart-fill text-danger"></i></p>
+            </div>
         </footer>
     </div>
 

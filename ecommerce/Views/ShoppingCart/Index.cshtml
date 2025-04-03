@@ -1,0 +1,85 @@
+@model ecommerce.Models.Cart
+@{
+    Layout = ViewData["Layout"] as string ?? "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Giỏ hàng";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Giỏ hàng của bạn</h2>
+
+    @if (Model.Items.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered text-center align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Tên sản phẩm</th>
+                        <th>Giá</th>
+                        <th>Số lượng</th>
+                        <th>Tổng</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Items)
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>$@item.Price.ToString("F2")</td>
+                            <td>
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <form asp-action="DecreaseQuantity" method="post" class="d-inline">
+                                        <input type="hidden" name="productId" value="@item.ProductId" />
+                                        <button type="submit" class="btn btn-outline-secondary btn-sm">-</button>
+                                    </form>
+                                    <span class="mx-2">@item.Quantity</span>
+                                    <form asp-action="IncreaseQuantity" method="post" class="d-inline">
+                                        <input type="hidden" name="productId" value="@item.ProductId" />
+                                        <button type="submit" class="btn btn-outline-secondary btn-sm">+</button>
+                                    </form>
+                                </div>
+                            </td>
+                            <td>$@((item.Price * item.Quantity).ToString("F2"))</td>
+                            <td>
+                                <form asp-action="RemoveFromCart" method="post" class="d-inline">
+                                    <input type="hidden" name="productId" value="@item.ProductId" />
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="bi bi-trash"></i> Xóa
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" class="text-end fw-bold">Tổng cộng:</td>
+                        <td class="fw-bold">$@Model.GetTotalPrice().ToString("F2")</td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="d-flex justify-content-between mt-3">
+            <a asp-controller="Product" asp-action="Index" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Tiếp tục mua sắm
+            </a>
+            <a asp-action="Checkout" class="btn btn-primary">
+                <i class="bi bi-cart-check"></i> Thanh toán
+            </a>
+        </div>
+    }
+    else
+    {
+        <p class="text-center text-muted">Giỏ hàng của bạn đang trống.</p>
+        <div class="text-center">
+            <a asp-controller="Product" asp-action="Index" class="btn btn-primary">
+                <i class="bi bi-cart-plus"></i> Mua sắm ngay
+            </a>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

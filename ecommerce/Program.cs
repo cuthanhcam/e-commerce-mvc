@@ -14,7 +14,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Add repositories, services, and other dependencies, use AddScoped for DI lifetime
 builder.Services.AddScoped<IProductRepository, EFProductRepository>();
 builder.Services.AddScoped<ICategoryRepository, EFCategoryRepository>();
-
+builder.Services.AddScoped<IOrderRepository, EFOrderRepository>();
+builder.Services.AddScoped<ICartRepository, EFCartRepository>();
 // Thêm Identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
@@ -37,6 +38,16 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.SlidingExpiration = true;
     options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
 });
+
+// Sử dụng bảng thay cho lưu vào bộ nhớ cache phân tán
+// // Thêm dịch vụ Session
+// builder.Services.AddDistributedMemoryCache(); // Sử dụng bộ nhớ cache phân tán
+// builder.Services.AddSession(options =>
+// {
+//     options.IdleTimeout = TimeSpan.FromMinutes(30); // Thời gian timeout của session
+//     options.Cookie.HttpOnly = true;
+//     options.Cookie.IsEssential = true; // Đảm bảo cookie session là cần thiết
+// });
 
 var app = builder.Build();
 

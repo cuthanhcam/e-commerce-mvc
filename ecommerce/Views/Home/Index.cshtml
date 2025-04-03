@@ -13,15 +13,18 @@
                 <div class="card shadow-sm h-100">
                     @if (product.Images != null && product.Images.Any())
                     {
-                        <img src="@product.Images.First().Url" class="card-img-top" alt="@product.Name" style="height: 200px; object-fit: cover;" />
+                        <img src="@product.Images.First().Url" class="card-img-top" alt="@product.Name"
+                            style="height: 200px; object-fit: cover;" />
                     }
                     else if (!string.IsNullOrEmpty(product.ImageUrl))
                     {
-                        <img src="@product.ImageUrl" class="card-img-top" alt="@product.Name" style="height: 200px; object-fit: cover;" />
+                        <img src="@product.ImageUrl" class="card-img-top" alt="@product.Name"
+                            style="height: 200px; object-fit: cover;" />
                     }
                     else
                     {
-                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center"
+                            style="height: 200px;">
                             <span class="text-muted">No image</span>
                         </div>
                     }
@@ -31,9 +34,16 @@
                         <p class="card-text text-truncate" title="@product.Description">@product.Description</p>
                     </div>
                     <div class="card-footer text-center bg-white border-0">
-                        <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="btn btn-primary btn-sm">
+                        <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id"
+                            class="btn btn-primary btn-sm">
                             <i class="bi bi-eye"></i> View Details
                         </a>
+                        <form asp-controller="ShoppingCart" asp-action="AddToCart" method="post" class="d-inline">
+                            <input type="hidden" name="productId" value="@product.Id" />
+                            <button type="submit" class="btn btn-success btn-sm">
+                                <i class="bi bi-cart-plus"></i> Thêm vào giỏ
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
